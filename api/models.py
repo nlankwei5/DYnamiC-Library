@@ -49,14 +49,18 @@ class CustomUser (AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return f"{self.username} ({self.email})"
     
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.CharField(blank=True, max_length=100) 
+
 class MusicSheet(models.Model):
     title = models.CharField(max_length=50, blank=False)
     file = models.FileField()
     date_uploaded = models.DateTimeField()
     uploaded_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    category = models.ForeignKey(category)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
-class category(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.CharField(blank=True, max_length=100) 
+
 
