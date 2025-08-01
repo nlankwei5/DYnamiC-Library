@@ -15,16 +15,15 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ['id','name', 'description']
 
 class MusicSheetSerializer(serializers.ModelSerializer):
+    uploaded_by_username = serializers.CharField(source='uploaded_by.username', read_only=True)
+    
     class Meta:
         model = MusicSheet
-        fields = ['title', 'file', 'date_uploaded','uploaded_by', 'category']
-        read_only_fields = ['uploaded_by', 'date_uploaded']
+        fields = ['title', 'file', 'date_uploaded','uploaded_by', 'uploaded_by_username', 'category']
+        read_only_fields = ['uploaded_by_username', 'date_uploaded', 'uploaded_by']
 
     def validate_file(self, value):
         if not value.name.endswith('.pdf'):
             raise  serializers.ValidationError("Only PDF files are allowed.")
-        
-        if value.content_type != 'application/pdf':
-            raise serializers.ValidationError("File must be a PDF.")
-        
+
         return value
