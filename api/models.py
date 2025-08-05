@@ -57,7 +57,7 @@ class Category(models.Model):
 
 class MusicSheet(models.Model):
     title = models.CharField(max_length=50, blank=False)
-    file = models.FileField()
+    file = models.FileField(upload_to='pdf-uploads', blank=False)
     date_uploaded = models.DateTimeField()
     uploaded_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
