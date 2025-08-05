@@ -55,12 +55,19 @@ class Category(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(blank=True, max_length=100) 
 
+    def __str__(self):
+        return self.name
+
 class MusicSheet(models.Model):
     title = models.CharField(max_length=50, blank=False)
     file = models.FileField(upload_to='pdf-uploads', blank=False)
     date_uploaded = models.DateTimeField()
     uploaded_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title
+ 
 
 
 
