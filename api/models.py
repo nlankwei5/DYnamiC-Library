@@ -39,7 +39,8 @@ class CustomUser (AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=150, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False) 
-    is_superuser = models.BooleanField(default=False) 
+    is_superuser = models.BooleanField(default=False)
+    is_uploader = models.BooleanField(default=False) 
 
     objects = CustomUserManager()
 
@@ -61,7 +62,7 @@ class Category(models.Model):
 class MusicSheet(models.Model):
     title = models.CharField(max_length=50, blank=False)
     file = models.FileField(upload_to='pdf-uploads', blank=False)
-    date_uploaded = models.DateTimeField()
+    date_uploaded = models.DateTimeField(auto_now_add=True)
     uploaded_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
