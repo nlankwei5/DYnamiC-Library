@@ -5,7 +5,9 @@ from .models import *
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields =  ['user_id', 'email', 'username', 'first_name', 'last_name']
+        fields =  ['user_id', 'email', 'username', 'first_name', 'last_name','is_admin' ]
+        read_only_fields = ['is_admin']
+
 
 
 

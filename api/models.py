@@ -39,6 +39,7 @@ class CustomUser (AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=150, blank=True)
     is_active = models.BooleanField(default=True) 
     is_superuser = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
     is_uploader = models.BooleanField(default=False) 
 
     objects = CustomUserManager()
