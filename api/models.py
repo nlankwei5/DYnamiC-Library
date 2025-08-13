@@ -24,7 +24,7 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_active', True)
         
         if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
+            raise ValueError('Superuser must have is_admin=True.')
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
         
@@ -40,6 +40,7 @@ class CustomUser (AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True) 
     is_superuser = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
     is_uploader = models.BooleanField(default=False) 
 
     objects = CustomUserManager()
