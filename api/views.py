@@ -29,10 +29,9 @@ class MusicSheetViewSet(viewsets.ModelViewSet):
     def download(self, request, pk=None):
         music_sheet = self.get_object()
 
-        # log the download
+        
         DownloadLog.objects.create(user=request.user, sheet=music_sheet)
 
-        # serve the file
         response = FileResponse(music_sheet.file.open('rb'), as_attachment=True)
         return response
 
