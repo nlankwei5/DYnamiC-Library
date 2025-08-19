@@ -40,7 +40,7 @@ class CustomUser (AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-    is_uploader = models.BooleanField(default=False) 
+     
 
     objects = CustomUserManager()
 
@@ -70,7 +70,12 @@ class MusicSheet(models.Model):
         return self.title
 
 
- 
+class DownloadLog(models.Model):
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+    sheet = models.ForeignKey(MusicSheet, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ["-timestamp"]
 
 
