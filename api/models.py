@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+from django.core.validators import FileExtensionValidator
 
 # Create your models here.
 
@@ -61,7 +62,7 @@ class Category(models.Model):
 
 class MusicSheet(models.Model):
     title = models.CharField(max_length=50, blank=False)
-    file = models.FileField(upload_to='pdf-uploads', blank=False)
+    file = models.FileField(upload_to='pdf-uploads', blank=False, validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
     date_uploaded = models.DateTimeField(auto_now_add=True)
     uploaded_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
