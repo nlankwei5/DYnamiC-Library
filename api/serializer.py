@@ -18,10 +18,11 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class MusicSheetSerializer(serializers.ModelSerializer):
     uploaded_by_username = serializers.CharField(source='uploaded_by.username', read_only=True)
+    category_name = serializers.CharField(source="category.name", read_only=True)
     
     class Meta:
         model = MusicSheet
-        fields = ['title', 'file', 'date_uploaded','uploaded_by', 'uploaded_by_username', 'category']
+        fields = ['title', 'file', 'date_uploaded','uploaded_by', 'uploaded_by_username', 'category', 'category_name']
         read_only_fields = ['uploaded_by_username', 'date_uploaded', 'uploaded_by']
 
     def validate_file(self, value):

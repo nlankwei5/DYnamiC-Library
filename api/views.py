@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from .serializer import * 
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from django_filters import rest_framework as filters
-from rest_framework.filters import SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter, OrderingFilter
 from .models import *
 from rest_framework import viewsets
 from rest_framework.decorators import action
@@ -14,14 +14,14 @@ from django.http import FileResponse
 class MusicSheetViewSet(viewsets.ModelViewSet):
     queryset = MusicSheet.objects.all()
     serializer_class = MusicSheetSerializer
-    filter_backends = [filters.DjangoFilterBackend, SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['categories']
+    filter_backends = [DjangoFilterBackend, SearchFilter,OrderingFilter]
+    filterset_fields = ['category', 'uploaded_by']
     search_fields = ['title']
-    ordering_fields = ['date_uploaded']
+    ordering_fields = ['date_uploaded'] 
     
     def get_permissions(self):
 
-        if self.action == ['create','update', 'partial_update', 'destroy']:
+        if self.action in ['create','update', 'partial_update', 'destroy']:
             permission_classes = [IsAdminUser]
         else:
             permission_classes = [IsAuthenticated]
