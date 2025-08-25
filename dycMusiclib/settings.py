@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'drf_yasg',
     'django_filters',
+    'celery', 
 ]
 
 MIDDLEWARE = [
@@ -161,3 +162,7 @@ DJOSER = {
     'SEND_CONFIRMATION_EMAIL': False,
     'SERIALIZERS': {},
 }
+
+CELERY_BROKER_URL = 'redis://localhost:6379'
+
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
