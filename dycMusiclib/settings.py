@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_filters',
     'celery', 
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -133,7 +135,7 @@ STATIC_URL = 'static/'
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'pdf-uploads')
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -166,3 +168,9 @@ DJOSER = {
 CELERY_BROKER_URL = 'redis://localhost:6379'
 
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME':  os.getenv('CLOUDINARY_NAME'),
+    'API_KEY':  os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET':  os.getenv('CLOUDINARY_SECRET'),
+}
