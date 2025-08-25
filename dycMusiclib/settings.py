@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path 
 import os 
 from dotenv import load_dotenv
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 load_dotenv()
 
@@ -135,6 +138,7 @@ STATIC_URL = 'static/'
 
 
 MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Default primary key field type
@@ -169,7 +173,7 @@ CELERY_BROKER_URL = 'redis://localhost:6379'
 
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 
-CLOUDINARY_STORAGE = {
+cloudinary.config = {
     'CLOUD_NAME':  os.getenv('CLOUDINARY_NAME'),
     'API_KEY':  os.getenv('CLOUDINARY_API_KEY'),
     'API_SECRET':  os.getenv('CLOUDINARY_SECRET'),
