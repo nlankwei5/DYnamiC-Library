@@ -22,7 +22,7 @@ class MusicSheetSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = MusicSheet
-        fields = ['title', 'file', 'date_uploaded','uploaded_by', 'uploaded_by_username', 'category', 'category_name']
+        fields = ['title', 'file','thumbnail', 'date_uploaded','uploaded_by', 'uploaded_by_username', 'category', 'category_name']
         read_only_fields = ['uploaded_by_username', 'date_uploaded', 'uploaded_by']
 
     def validate_file(self, value):
@@ -30,3 +30,6 @@ class MusicSheetSerializer(serializers.ModelSerializer):
             raise  serializers.ValidationError("Only PDF files are allowed.")
 
         return value
+    
+    
+    

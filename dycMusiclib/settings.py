@@ -49,8 +49,7 @@ INSTALLED_APPS = [
     'djoser',
     'rest_framework_simplejwt',
     'drf_yasg',
-    'django_filters',
-    'celery', 
+    'django_filters', 
     'cloudinary_storage',
     'cloudinary',
 ]
@@ -173,8 +172,9 @@ CELERY_BROKER_URL = 'redis://localhost:6379'
 
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 
-cloudinary.config = {
-    'CLOUD_NAME':  os.getenv('CLOUDINARY_NAME'),
-    'API_KEY':  os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET':  os.getenv('CLOUDINARY_SECRET'),
-}
+cloudinary.config(
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.getenv('CLOUDINARY_API_KEY'),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET'),
+    secure=True
+)

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.core.validators import FileExtensionValidator
 from cloudinary.models import CloudinaryField
+from cloudinary.utils import cloudinary_url
 
 # Create your models here.
 
@@ -63,11 +64,24 @@ class Category(models.Model):
 
 class MusicSheet(models.Model):
     title = models.CharField(max_length=50, blank=False)
-    file = CloudinaryField('file', blank=False, validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
-    thumbnail = CloudinaryField('thumbnails/', blank=True, null=True)
+    file = CloudinaryField('file', resource_type="raw", allowed_formats=['pdf'], blank=False)
+    thumbnail = models.URLField(blank=True, null=True)
     date_uploaded = models.DateTimeField(auto_now_add=True)
     uploaded_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.file and not self.thumbnail:
+            thumb_url, _ = cloudinary_url(
+                self.file.public_id,   # Cloudinary already knows the public_id
+                format="jpg",
+                transformation=[{"page": 1, "width": 300, "crop": "scale"}]
+            )
+            self.thumbnail = thumb_url
+
+            # Save again, but skip infinite loop
+            super().save(update_fields=["thumbnail"])
 
     def __str__(self):
         return self.title
