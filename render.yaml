@@ -5,7 +5,7 @@ services:
     runtime: python
     buildCommand: 'pip intall -r requirements.txt'
     startCommand: 'gunicorn dycMusiclib.wsgi:application' 
-    postDeployCommand: |
+    preDeployCommand: |
       python manage.py migrate
       if [[ $CREATE_SUPERUSER ]]; then
         python manage.py createsuperuser --no-input
